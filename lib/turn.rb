@@ -14,26 +14,33 @@ def move(board, index, character = "X")
  board[index] = character
 end
 
-def valid_move?(board, index)
-  if index.between?(0,8) && !position_taken?(board, index)
-   true
-  end
+def position_taken?(board, index)
+if board[index] == " " || board[index] == "" || board[index] == nil
+  false
+else
+  true
+end
 end
 
-# re-define your #position_taken? method here, so that you can use it in the #valid_move? method above.
-def position_taken?(board, index)
-  board[index] == "X" || board[index] == "O"
+def valid_move?(board, index)
+  if index == nil || index < 0 || index > 8
+    false
+  elsif position_taken?(board, index)
+    false
+  else
+    true
+  end
 end
 
 def turn(board)
-  puts "Please enter 1-9:"
-  num = gets.strip
-  index = input_to_index(num)
-  if valid_move?(board, index) == true
+  puts "Please enter 1-9"
+  number = gets.strip
+
+  input_to_index(number)
+  if valid_move?(board, number) == true
     move(board, index, character = "X")
     display_board(board)
-else
+  else
     turn(board)
   end
-
- end
+end
